@@ -1,6 +1,6 @@
 FROM mysql:latest
 
-COPY ./ /app
+COPY ./sql/ /app
 
 EXPOSE 3306
 
