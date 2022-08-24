@@ -12,28 +12,28 @@ function getMysqlPassword() {
   return fs.readFileSync(mysqlPasswordFile, 'utf8').split(/\r?\n/)[0];
 }
 const server = http.createServer((req, res) => {
-  // const mysqlPassword = getMysqlPassword();
-  // let dbResult;
-  // var con = mysql.createConnection({
-  //   host: mysqlHostname,
-  //   user: "root",
-  //   password: mysqlPassword,
-  //   port: 3306,
-  // });
-  // con.connect(function (err) {
-  //   if (err) console.log(err);
-  //   console.log("Connected!");
-  //   var sql = "select * from app.user";
-  //   con.query(sql, function (err, result) {
-  //     if (err) throw err;
-  //     dbResult = result;
-  //     res.statusCode = 200;
-  //     res.setHeader("Content-Type", "text/plain");
-  //     console.log(dbResult);
-  //     res.end(JSON.stringify(dbResult));
-  //   });
-  // });
-  res.end(JSON.stringify("hello"));
+  console.log('Request received');
+  const mysqlPassword = getMysqlPassword();
+  let dbResult;
+  var con = mysql.createConnection({
+    host: mysqlHostname,
+    user: "root",
+    password: mysqlPassword,
+    port: 3306,
+  });
+  con.connect(function (err) {
+    if (err) console.log(err);
+    console.log("Connected!");
+    var sql = "select * from app.user";
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      dbResult = result;
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "text/plain");
+      console.log(dbResult);
+      res.end(JSON.stringify(dbResult));
+    });
+  });
 });
 
 server.listen(webAppPort, hostname, () => {
