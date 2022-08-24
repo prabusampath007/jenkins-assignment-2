@@ -8,12 +8,9 @@ const mysqlPassword = process.env.MYSQL_PASSWORD;
 console.log(webAppPort);
 console.log(mysqlHostname);
 console.log(mysqlPassword)
-function getMysqlPassword() {
-  return fs.readFileSync(mysqlPasswordFile, 'utf8').split(/\r?\n/)[0];
-}
+
 const server = http.createServer((req, res) => {
   console.log('Request received');
-  const mysqlPassword = getMysqlPassword();
   let dbResult;
   var con = mysql.createConnection({
     host: mysqlHostname,
