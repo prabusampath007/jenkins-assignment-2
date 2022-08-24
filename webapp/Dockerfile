@@ -1,6 +1,6 @@
 FROM node:alpine
 
-COPY main.js package.json ./
+COPY ./webapp/main.js ./webapp/package.json ./
 
 RUN npm run build
 
