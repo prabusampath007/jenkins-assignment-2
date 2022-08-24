@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Deploy') {
             steps {
-                sh deploy.sh
+                sh "aws ecs run-task --cluster prabu-cluster --count 1 --task-definition prabu-task --network-configuration \"awsvpcConfiguration={subnets=['subnet-0cd0133ff048485ea','subnet-012a789be3603bae8'],securityGroups=['sg-01b5bc54f58ef5050'],assignPublicIp='ENABLED'}\" --launch-type FARGATE --region us-east-1"
             }
         }
     }

@@ -1,4 +1,5 @@
-imagename = "prabusampath007/mywebapp"
+webappimagename = "prabusampath007/mywebapp"
+sqlimagename = "prabusampath007/mysql"
 registryCredential = 'docker-credentials'
 
 pipeline {
@@ -8,7 +9,11 @@ pipeline {
             steps {
                 script{
                     sh "cd .."
-                    dockerImage = docker.build(imagename, "-f ./webapp/Dockerfile .")
+                    dockerImage = docker.build(webappimagename, "-f ./webapp/Dockerfile .")
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                    dockerImage = docker.build(sqlimagename, "-f ./sql/Dockerfile .")
                     docker.withRegistry( '', registryCredential ) {
                         dockerImage.push()
                     }
