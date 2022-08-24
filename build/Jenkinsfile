@@ -1,0 +1,19 @@
+imagename = "prabusampath007/mywebapp"
+registryCredential = 'docker-credentials'
+
+pipeline {
+    agent { label 'ec2-agent-build'}
+    stages {
+        stage('Build image') {
+            steps {
+                script{
+                    sh "cd .."
+                    dockerImage = docker.build(imagename, "-f ./webapp/Dockerfile .")
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+    }
+}
